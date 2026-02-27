@@ -8,7 +8,7 @@ function Home() {
         <header className="flex justify-between">
           <div className="flex">
             <h1>FDrive</h1>
-            <h2>Bienvenido Usuario</h2>
+            <h2>Bienvenido</h2>
           </div>
           <nav>
             <Link to="/register">Registrarse</Link>

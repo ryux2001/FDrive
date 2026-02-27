@@ -1,12 +1,10 @@
-import { useState } from "react"
 import { useAuth } from "../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import { supabase } from "../lib/supabase"
+import { Link } from "react-router-dom"
 
 function Dashboard() {
     const {usuario} = useAuth()
-    const [cargando, setCargando] = useState(false)
-    const [error, setError] = useState(null)
     const nombre = usuario.user_metadata.nombre
     const navigate = useNavigate()
 
@@ -18,9 +16,18 @@ function Dashboard() {
   return (
     <>
         <div>
-            <h2>Dashboard</h2>
-            <h2>Bievenido {nombre}</h2>
-            <button onClick={handleLogout}>Cerrar Sesion</button>
+            <header>
+                <h2>Dashboard</h2>
+                <h2>Bievenido {nombre}</h2>
+                <button onClick={handleLogout}>Cerrar Sesion</button>
+            </header>
+            <main>
+                <ul>
+                    <li>
+                        <Link to="/employees">Trabajadores</Link>
+                    </li>
+                </ul>
+            </main>
         </div>
     </>
   )
