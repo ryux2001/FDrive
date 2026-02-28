@@ -26,6 +26,12 @@ function Dashboard() {
                     <li>
                         <Link to="/employees">Trabajadores</Link>
                     </li>
+                    <li>
+                        <Link to="/vans">Furgonetas</Link>
+                    </li>
+                    <li>
+                        <Link to="/routes">Rutas</Link>
+                    </li>
                 </ul>
             </main>
         </div>

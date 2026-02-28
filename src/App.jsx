@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Employees from "./pages/Employees";
+import Vans from "./pages/Vans";
+import RoutesList from './pages/RoutesList'
 import RutaProtegida from "./components/RutaProtegida";
 import RutaPublica from "./components/RutaPublica";
 
@@ -47,6 +49,16 @@ function App() {
           <RutaProtegida>
             <Employees/>
           </RutaProtegida>
+        }/>
+        <Route path="/vans" element={
+        <RutaProtegida>
+          <Vans/>
+        </RutaProtegida>
+        }/>
+        <Route path="/routes" element={
+        <RutaProtegida>
+          <RoutesList/>
+        </RutaProtegida>
         }/>
       </Routes>
     </>

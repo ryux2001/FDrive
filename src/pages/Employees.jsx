@@ -127,7 +127,7 @@ function Employees() {
   return (
     <>
       <div>
-        <header>
+        <header className="flex gap-3">
           <h2>Trabajadores</h2>
           <nav>
             <Link to="/dashboard">Dashboard</Link>
