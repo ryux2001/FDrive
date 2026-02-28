@@ -11,22 +11,39 @@ function Employees() {
   const [error, setError] = useState(null);
 
   {
-    /*Estados para el formulario*/
+    /*Estados para el formulario CRUD:CREATE*/
   }
   const [nombre, setNombre] = useState("");
   const [empresa, setEmpresa] = useState("");
   const [tipo, setTipo] = useState("");
   const [rol, setRol] = useState("");
-  const [monto, setMonto] = useState(0);
+  const [monto, setMonto] = useState('');
   const [notas, setNotas] = useState("");
 
-  useEffect(() => {
-    obtenerTrabajadores();
-  }, []);
-  //CRUD
+  function crearTrabajador (){
+    setEditTrab(null)
+    limpiarCampos()
+    setMostrarForm(true)
+  }
+
+  /*Estado para saber el trabajador que estamos editando CRUD: UPDATE*/
+  const [editTrab, setEditTrab] = useState(null);
+
+  async function editarTrabajador(trabajador) {
+    setEditTrab(trabajador);
+    setNombre(trabajador.nombre);
+    setEmpresa(trabajador.empresa);
+    setTipo(trabajador.tipo);
+    setRol(trabajador.rol);
+    setMonto(trabajador.monto);
+    setNotas(trabajador.notas);
+    setMostrarForm(true);
+  }
+
+  //CRUD: READ
   async function obtenerTrabajadores() {
     setCargando(true);
-    setError(null)
+    setError(null);
     const { data, error } = await supabase
       .from("trabajadores")
       .select("*")
@@ -41,46 +58,71 @@ function Employees() {
     setCargando(false);
   }
 
+  /*CRUD: DELETE*/
   async function eliminarTrabajador(id) {
     if (!confirm("Seguro que quieres eliminar este trabajador?")) {
       return;
     }
-    setError(null)
-    const {error} = await supabase
-        .from('trabajadores')
-        .delete()
-        .eq('id', id)
+    setError(null);
+    const { error } = await supabase.from("trabajadores").delete().eq("id", id);
     if (error) {
-        setError(error.message)
-        alert('Error al eliminar:',error)
-        return
+      setError(error.message);
+      alert("Error al eliminar:", error);
+      return;
     }
-    obtenerTrabajadores()
+    obtenerTrabajadores();
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     setCargando(true);
     setError(null);
-    const { error } = await supabase
-      .from("trabajadores")
-      .insert({ nombre, empresa, tipo, rol, monto, notas });
-
-    if (error) {
-      setError(error.message);
-      setCargando(false);
-      return;
+    if (editTrab === null) {
+      const { error } = await supabase
+        .from("trabajadores")
+        .insert({ nombre, empresa, tipo, rol, monto: parseFloat(monto), notas });
+      if (error) {
+        setError(error.message);
+        setCargando(false);
+        return;
+      }
+    } else {
+      const { error } = await supabase
+        .from("trabajadores")
+        .update({ nombre, empresa, tipo, rol, monto: parseFloat(monto), notas })
+        .eq('id', editTrab.id)
+      if (error) {
+        setError(error.message);
+        setCargando(false);
+        setEditTrab(null)
+        return;
+      }
     }
-    setNombre("");
-    setEmpresa("");
-    setTipo("");
-    setRol("");
-    setMonto(0);
-    setNotas("");
+
+    limpiarCampos()
     setCargando(false);
     setMostrarForm(false);
     obtenerTrabajadores();
   }
+
+  const limpiarCampos = ()=>{
+    setNombre("");
+    setEmpresa("");
+    setTipo("");
+    setRol("");
+    setMonto('');
+    setNotas("");
+  }
+
+  const cerrarModal = ()=>{
+    limpiarCampos()
+    setEditTrab(null)
+    setMostrarForm(false)
+  }
+
+  useEffect(() => {
+    obtenerTrabajadores();
+  }, []);
 
   return (
     <>
@@ -93,7 +135,7 @@ function Employees() {
         </header>
         <main>
           <div>
-            <button onClick={() => setMostrarForm(true)}>
+            <button onClick={crearTrabajador}>
               Agregar Trabajador
             </button>
             {cargando && <p>Cargando...</p>}
@@ -108,7 +150,10 @@ function Employees() {
                 <p>{trabajador.nombre}</p>
                 <p>{trabajador.tipo}</p>
                 <p>{trabajador.rol}</p>
-                <button onClick={()=>eliminarTrabajador(trabajador.id)}>Eliminar Trabajador</button>
+                <button onClick={() => editarTrabajador(trabajador)}>Editar Trabajador</button>
+                <button onClick={() => eliminarTrabajador(trabajador.id)}>
+                  Eliminar Trabajador
+                </button>
               </div>
             ))}
 
@@ -158,7 +203,7 @@ function Employees() {
                     {cargando ? "Guardando" : "Guardar"}
                   </button>
                   {error && <p>{error}</p>}
-                  <button type="button" onClick={() => setMostrarForm(false)}>
+                  <button type="button" onClick={cerrarModal}>
                     Cancelar
                   </button>
                 </form>
