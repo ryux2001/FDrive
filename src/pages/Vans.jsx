@@ -211,7 +211,7 @@ function Vans() {
                     value={trabajador_id}
                     onChange={(e) => setTrabajadorId(e.target.value)}
                   >
-                    <option value="">Selecciona un trabajador</option>
+                    <option value="Vacio">Selecciona un trabajador</option>
                     {trabajadores.map((t) => (
                       <option key={t.id} value={t.id}>
                         {t.nombre}
