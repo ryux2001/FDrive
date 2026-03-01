@@ -51,13 +51,14 @@ function Dashboard() {
 
   async function calcularTotales() {
     try {
-      const [facturasRes, gastosRes, trabajadoresRes, furgonetasRes, dieselRes, rutasRes] = await Promise.all([
+      const [facturasRes, gastosRes, trabajadoresRes, furgonetasRes, dieselRes, rutasRes, soportesRes] = await Promise.all([
         supabase.from('facturas').select('monto').eq('user_id', usuario.id).eq('mes_id', mesActivo.id),
         supabase.from('gastos_propios').select('monto').eq('user_id', usuario.id).eq('mes_id', mesActivo.id),
         supabase.from('trabajadores').select('monto').eq('user_id', usuario.id),
         supabase.from('furgonetas').select('pago_mensual').eq('user_id', usuario.id),
         supabase.from('diesel_registros').select('monto').eq('user_id', usuario.id).eq('mes_id', mesActivo.id),
         supabase.from('rutas').select('*').eq('user_id', usuario.id),
+        supabase.from('soportes').select('monto_pagado').eq('user_id', usuario.id).eq('mes_id', mesActivo.id),
       ])
 
       // Total azul: suma de facturas
@@ -65,13 +66,14 @@ function Dashboard() {
       setTotalFacturas(azul)
 
       // Total naranja: todos los gastos
+      const totalSoportes = (soportesRes.data || []).reduce((sum, s) => sum + parseFloat(s.monto_pagado || 0), 0)
       const gastosPropios = (gastosRes.data || []).reduce((sum, g) => sum + parseFloat(g.monto), 0)
       const sueldosTrabajadores = (trabajadoresRes.data || []).reduce((sum, t) => {
         return sum + parseFloat(t.monto || 0)
       }, 0)
       const pagoFurgonetas = (furgonetasRes.data || []).reduce((sum, f) => sum + parseFloat(f.pago_mensual || 0), 0)
       const totalDiesel = (dieselRes.data || []).reduce((sum, d) => sum + parseFloat(d.monto || 0), 0)
-      setTotalGastos(gastosPropios + sueldosTrabajadores + pagoFurgonetas + totalDiesel)
+      setTotalGastos(gastosPropios + sueldosTrabajadores + pagoFurgonetas + totalDiesel + totalSoportes)
 
       // Total morado: ganancia estimada de rutas
       const furgonetas = furgonetasRes.data || []
@@ -171,6 +173,7 @@ function Dashboard() {
             <Link to="/routes">Rutas</Link>
             <Link to="/invoices">Facturas</Link>
             <Link to="/expenses">Gastos propios</Link>
+            <Link to="/supports">Soportes</Link>
           </nav>
 
           {/* Totales */}
