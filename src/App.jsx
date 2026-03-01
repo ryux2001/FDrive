@@ -5,7 +5,8 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Employees from "./pages/Employees";
 import Vans from "./pages/Vans";
-import RoutesList from './pages/RoutesList'
+import RoutesList from "./pages/RoutesList";
+import Invoices from "./pages/Invoices";
 import RutaProtegida from "./components/RutaProtegida";
 import RutaPublica from "./components/RutaPublica";
 
@@ -45,21 +46,38 @@ function App() {
             </RutaProtegida>
           }
         />
-        <Route path="/employees" element={
-          <RutaProtegida>
-            <Employees/>
-          </RutaProtegida>
-        }/>
-        <Route path="/vans" element={
-        <RutaProtegida>
-          <Vans/>
-        </RutaProtegida>
-        }/>
-        <Route path="/routes" element={
-        <RutaProtegida>
-          <RoutesList/>
-        </RutaProtegida>
-        }/>
+        <Route
+          path="/employees"
+          element={
+            <RutaProtegida>
+              <Employees />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/vans"
+          element={
+            <RutaProtegida>
+              <Vans />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/routes"
+          element={
+            <RutaProtegida>
+              <RoutesList />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/invoices"
+          element={
+            <RutaProtegida>
+              <Invoices />
+            </RutaProtegida>
+          }
+        />
       </Routes>
     </>
   );
