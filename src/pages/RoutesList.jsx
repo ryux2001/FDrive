@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
+import { useMes } from "../context/MesContext";
 import { Link } from "react-router-dom";
 
 function RoutesList() {
+  const { mesActivo } = useMes()
   const { usuario } = useAuth();
   const [mostrarForm, setMostrarForm] = useState(false);
   const [rutas, setRutas] = useState([]);
@@ -50,7 +52,7 @@ function RoutesList() {
         supabase.from("trabajadores").select("*").eq("user_id", usuario.id),
         supabase.from("furgonetas").select("*").eq("user_id", usuario.id),
         supabase.from("rutas").select("*").eq("user_id", usuario.id),
-        supabase.from("diesel_registros").select("*").eq("user_id", usuario.id),
+        supabase.from("diesel_registros").select("*").eq("user_id", usuario.id).eq("mes_id", mesActivo?.id),
       ]);
 
       if (trabajadoresRes.error) throw trabajadoresRes.error;
@@ -71,7 +73,7 @@ function RoutesList() {
 
   useEffect(() => {
     if (usuario) fetchAllData();
-  }, [usuario]);
+  }, [usuario, mesActivo]);
 
   function editarRuta(ruta) {
     setEditRuta(ruta);
@@ -198,6 +200,7 @@ function RoutesList() {
       monto: parseFloat(nuevoMontoDiesel),
       descripcion: nuevaDescripcionDiesel,
       user_id: usuario.id,
+      mes_id: mesActivo?.id || null,
     });
 
     if (error) {
@@ -210,7 +213,8 @@ function RoutesList() {
     const { data, error: fetchError } = await supabase
       .from("diesel_registros")
       .select("*")
-      .eq("user_id", usuario.id);
+      .eq("user_id", usuario.id)
+      .eq("mes_id", mesActivo?.id);
     if (fetchError) {
       setError(fetchError.message);
     } else {

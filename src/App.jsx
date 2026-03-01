@@ -7,6 +7,7 @@ import Employees from "./pages/Employees";
 import Vans from "./pages/Vans";
 import RoutesList from "./pages/RoutesList";
 import Invoices from "./pages/Invoices";
+import Expenses from "./pages/Expenses";
 import RutaProtegida from "./components/RutaProtegida";
 import RutaPublica from "./components/RutaPublica";
 
@@ -75,6 +76,14 @@ function App() {
           element={
             <RutaProtegida>
               <Invoices />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/expenses"
+          element={
+            <RutaProtegida>
+              <Expenses />
             </RutaProtegida>
           }
         />
