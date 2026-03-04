@@ -200,7 +200,7 @@ function Supports() {
         <nav className="flex-1 px-3 py-4 space-y-1">
           <button
             onClick={() => {
-              setMesActivo(null);
+              // setMesActivo(null);
               setMenuMovilAbierto(false);
               navigate("/dashboard");
             }}
@@ -208,7 +208,7 @@ function Supports() {
               !mesActivo
                 ? "bg-blue-50 text-blue-700"
                 : "text-gray-600 hover:bg-gray-50"
-            }`}
+            } hover:cursor-pointer`}
           >
             <LayoutDashboard size={18} /> Dashboard
           </button>

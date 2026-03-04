@@ -189,7 +189,7 @@ function Invoices() {
         <nav className="flex-1 px-3 py-4 space-y-1">
           <button
             onClick={() => {
-              setMesActivo(null);
+              // setMesActivo(null);
               setMenuMovilAbierto(false);
               navigate("/dashboard");
             }}

@@ -3,7 +3,17 @@ import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
 import { useMes } from "../context/MesContext";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X, LayoutDashboard, Users, Truck, Route, FileText, Receipt, HelpCircle } from "lucide-react";
+import {
+  Menu,
+  X,
+  LayoutDashboard,
+  Users,
+  Truck,
+  Route,
+  FileText,
+  Receipt,
+  HelpCircle,
+} from "lucide-react";
 
 function Employees() {
   const { usuario } = useAuth();
@@ -23,6 +33,7 @@ function Employees() {
   const [monto, setMonto] = useState("");
   const [notas, setNotas] = useState("");
   const [editTrab, setEditTrab] = useState(null);
+  const [fechaInicio, setFechaInicio] = useState("");
 
   // Función para crear nuevo (abre modal)
   const crearTrabajador = () => {
@@ -40,6 +51,7 @@ function Employees() {
     setRol(trabajador.rol);
     setMonto(trabajador.monto);
     setNotas(trabajador.notas);
+    setFechaInicio(trabajador.fecha_inicio)
     setMostrarForm(true);
   };
 
@@ -87,6 +99,7 @@ function Employees() {
         rol,
         monto: parseFloat(monto),
         notas,
+        fecha_inicio: fechaInicio,
       });
       if (error) {
         setError(error.message);
@@ -96,7 +109,15 @@ function Employees() {
     } else {
       const { error } = await supabase
         .from("trabajadores")
-        .update({ nombre, empresa, tipo, rol, monto: parseFloat(monto), notas })
+        .update({
+          nombre,
+          empresa,
+          tipo,
+          rol,
+          monto: parseFloat(monto),
+          notas,
+          fecha_inicio: fechaInicio,
+        })
         .eq("id", editTrab.id);
       if (error) {
         setError(error.message);
@@ -119,6 +140,7 @@ function Employees() {
     setMonto("");
     setNotas("");
     setEditTrab(null);
+    setFechaInicio("");
   };
 
   const cerrarModal = () => {
@@ -157,7 +179,9 @@ function Employees() {
         `}
       >
         <div className="p-6 flex justify-between items-center border-b border-gray-100">
-          <h1 className="text-xl font-bold text-gray-900 tracking-tight">FDrive</h1>
+          <h1 className="text-xl font-bold text-gray-900 tracking-tight">
+            FDrive
+          </h1>
           <button
             className="md:hidden p-2"
             onClick={() => setMenuMovilAbierto(false)}
@@ -169,7 +193,7 @@ function Employees() {
         <nav className="flex-1 px-3 py-4 space-y-1">
           <button
             onClick={() => {
-              setMesActivo(null);
+              // setMesActivo(null);
               setMenuMovilAbierto(false);
               navigate("/dashboard");
             }}
@@ -188,12 +212,28 @@ function Employees() {
                 Módulos
               </p>
               {[
-                { to: "/employees", label: "Trabajadores", icon: <Users size={18} /> },
+                {
+                  to: "/employees",
+                  label: "Trabajadores",
+                  icon: <Users size={18} />,
+                },
                 { to: "/vans", label: "Furgonetas", icon: <Truck size={18} /> },
                 { to: "/routes", label: "Rutas", icon: <Route size={18} /> },
-                { to: "/invoices", label: "Facturas", icon: <FileText size={18} /> },
-                { to: "/expenses", label: "Gastos Propios", icon: <Receipt size={18} /> },
-                { to: "/supports", label: "Soportes", icon: <HelpCircle size={18} /> },
+                {
+                  to: "/invoices",
+                  label: "Facturas",
+                  icon: <FileText size={18} />,
+                },
+                {
+                  to: "/expenses",
+                  label: "Gastos Propios",
+                  icon: <Receipt size={18} />,
+                },
+                {
+                  to: "/supports",
+                  label: "Soportes",
+                  icon: <HelpCircle size={18} />,
+                },
               ].map((link) => (
                 <Link
                   key={link.to}
@@ -267,7 +307,9 @@ function Employees() {
 
           {!cargando && trabajadores.length === 0 && (
             <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-12 text-center">
-              <p className="text-gray-400 font-medium">No hay trabajadores aún</p>
+              <p className="text-gray-400 font-medium">
+                No hay trabajadores aún
+              </p>
             </div>
           )}
 
@@ -299,6 +341,9 @@ function Employees() {
                           <p className="text-xs text-gray-500">
                             {trabajador.empresa} · {trabajador.rol}
                           </p>
+                          <p className="text-xs text-gray-500">
+                            fecha inico: {trabajador.fecha_inicio? trabajador.fecha_inicio : "Desconocido" }
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -308,7 +353,9 @@ function Employees() {
                           {parseFloat(trabajador.monto || 0).toFixed(2)} €
                         </p>
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-                          {trabajador.tipo === "empleado" ? "Sueldo" : "Ganancia"}
+                          {trabajador.tipo === "empleado"
+                            ? "Sueldo"
+                            : "Ganancia"}
                         </p>
                       </div>
                       <div className="flex gap-2">
@@ -405,7 +452,9 @@ function Employees() {
                     </div>
                     <div>
                       <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">
-                        {tipo === "empleado" ? "Sueldo mensual (€)" : "Ganancia mensual (€)"}
+                        {tipo === "empleado"
+                          ? "Sueldo mensual (€)"
+                          : "Ganancia mensual (€)"}
                       </label>
                       <input
                         type="number"
@@ -427,6 +476,18 @@ function Employees() {
                         rows="3"
                         className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20 resize-none"
                       ></textarea>
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">
+                        Fecha de inicio
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ej: 12/12/2026"
+                        value={fechaInicio}
+                        onChange={(e) => setFechaInicio(e.target.value)}
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                      />
                     </div>
                     {error && (
                       <div className="bg-red-50 border border-red-100 text-red-600 text-sm font-bold p-4 rounded-xl">
