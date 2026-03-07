@@ -28,6 +28,9 @@ function Expenses() {
   const [error, setError] = useState(null);
   const [menuMovilAbierto, setMenuMovilAbierto] = useState(false);
 
+  //Busqueda
+  const [busqueda, setBusqueda] = useState('')
+
   // Estados del formulario
   const [nombre, setNombre] = useState("");
   const [monto, setMonto] = useState("");
@@ -285,13 +288,22 @@ function Expenses() {
                     {mesActivo.nombre}
                   </h3>
                 </div>
+                {/*Inpust de busqueda */}
+                <div className="grid grid-cols-2 gap-2 wrap-normal">
+                  <input type="text"
+                  onChange={(e)=> setBusqueda(e.target.value)}
+                  placeholder="Buscar Gasto"
+                  className="border-2 border-gray-300 rounded-3xl px-3 py-2"
+                  value={busqueda} />
+                  
                 <button
                   onClick={crearGasto}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full text-sm font-bold shadow-lg shadow-blue-100 transition-all flex items-center gap-2"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full text-sm font-bold shadow-lg shadow-blue-100 transition-all flex justify-center w-35" 
                 >
-                  <Plus size={18} />
+                  {/* <Plus size={18} /> */}
                   Agregar Gasto
                 </button>
+                </div>
               </div>
 
               {cargando && (
@@ -330,7 +342,10 @@ function Expenses() {
                     </div>
                   </div>
                   <div className="divide-y divide-gray-100">
-                    {gastos.map((gasto) => (
+                    {
+                    
+                    gastos.filter((gasto)=> gasto.nombre.toLowerCase().includes(busqueda.toLowerCase()))
+                    .map((gasto) => (
                       <div
                         key={gasto.id}
                         className="px-5 md:px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-gray-50/50 transition-colors"
