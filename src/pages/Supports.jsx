@@ -204,7 +204,7 @@ function Supports() {
               setMenuMovilAbierto(false);
               navigate("/dashboard");
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
+            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors hover:text-black cursor-pointer ${
               !mesActivo
                 ? "bg-blue-50 text-blue-700"
                 : "text-gray-600 hover:bg-gray-50"
@@ -242,7 +242,7 @@ function Supports() {
         <div className="p-4 border-t border-gray-100">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+            className="cursor-pointer w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors"
           >
             Cerrar sesión
           </button>
@@ -302,10 +302,10 @@ function Supports() {
                 </div>
                 <button
                   onClick={crearSoporte}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full text-sm font-bold shadow-lg shadow-blue-100 transition-all flex items-center gap-2"
+                  className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full text-sm font-bold shadow-lg shadow-blue-100 transition-all flex items-center gap-2"
                 >
                   <Plus size={18} />
-                  Agregar Soporte
+                  Soporte
                 </button>
               </div>
 
@@ -412,14 +412,14 @@ function Supports() {
                           <div className="flex items-center gap-2 ml-13 sm:ml-0">
                             <button
                               onClick={() => editarSoporte(soporte)}
-                              className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                              className="cursor-pointer p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                               title="Editar"
                             >
                               <Edit size={18} />
                             </button>
                             <button
                               onClick={() => eliminarSoporte(soporte.id)}
-                              className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                              className="cursor-pointer p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                               title="Eliminar"
                             >
                               <Trash2 size={18} />

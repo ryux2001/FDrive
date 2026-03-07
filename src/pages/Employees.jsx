@@ -13,6 +13,9 @@ import {
   FileText,
   Receipt,
   HelpCircle,
+  Trash2,
+  Edit,
+  Plus
 } from "lucide-react";
 
 function Employees() {
@@ -197,7 +200,7 @@ function Employees() {
               setMenuMovilAbierto(false);
               navigate("/dashboard");
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
+            className={`cursor-pointer w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors hover:text-black ${
               !mesActivo
                 ? "bg-blue-50 text-blue-700"
                 : "text-gray-600 hover:bg-gray-50"
@@ -251,7 +254,7 @@ function Employees() {
         <div className="p-4 border-t border-gray-100">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+            className="cursor-pointer w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors"
           >
             Cerrar sesión
           </button>
@@ -288,9 +291,10 @@ function Employees() {
           {/* Botón agregar trabajador */}
           <button
             onClick={crearTrabajador}
-            className="mb-6 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full text-sm font-bold shadow-lg shadow-blue-100 transition-all flex items-center gap-2"
+            className="cursor-pointer mb-6 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full text-sm font-bold shadow-lg shadow-blue-100 transition-all flex items-center gap-2"
           >
-            + Agregar Trabajador
+            <Plus size={18}/>
+            Trabajador
           </button>
 
           {cargando && (
@@ -318,7 +322,7 @@ function Employees() {
               <div className="px-5 md:px-6 py-4 border-b border-gray-100 bg-gray-50/50">
                 <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
                   Lista de trabajadores
-                  <span className="text-xs font-medium text-gray-400 bg-white px-2 py-0.5 rounded-md border border-gray-200">
+                  <span className="text-xs font-medium text-gray-600 bg-white px-2 py-0.5 rounded-md border border-gray-200">
                     {trabajadores.length}
                   </span>
                 </h4>
@@ -361,17 +365,17 @@ function Employees() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => editarTrabajador(trabajador)}
-                          className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          className="cursor-pointer p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                           title="Editar"
                         >
-                          ✎
+                          <Edit size={18}/>
                         </button>
                         <button
                           onClick={() => eliminarTrabajador(trabajador.id)}
-                          className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          className="cursor-pointer p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                           title="Eliminar"
                         >
-                          🗑️
+                          <Trash2 size={18}/>
                         </button>
                       </div>
                     </div>

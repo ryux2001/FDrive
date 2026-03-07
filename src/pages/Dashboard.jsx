@@ -217,7 +217,7 @@ function Dashboard() {
     setNombrePlantilla("");
     setMostrarFormPlantilla(false);
     alert("Plantilla guardada correctamente");
-    obtenerPlantillas()
+    obtenerPlantillas();
   }
 
   //Cargar plantillas
@@ -230,7 +230,7 @@ function Dashboard() {
   }
 
   //Eliminar mes
-  async function eliminarMes(id){
+  async function eliminarMes(id) {
     if (!confirm("¿Seguro que quieres eliminar este mes?")) return;
     setError(null);
     const { error } = await supabase.from("meses").delete().eq("id", id);
@@ -240,7 +240,6 @@ function Dashboard() {
       return;
     }
     obtenerMeses();
-
   }
 
   async function cargarPlantilla(e) {
@@ -334,7 +333,7 @@ function Dashboard() {
               setMesActivo(null);
               setMenuMovilAbierto(false);
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors ${!mesActivo ? "bg-blue-50 text-blue-700" : "text-gray-600 hover:bg-gray-50"} hover:cursor-pointer`}
+            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors ${!mesActivo ? "bg-blue-50 text-blue-700" : "text-gray-600 hover:bg-gray-50"} hover:text-black cursor-pointer`}
           >
             <LayoutDashboard size={18} /> Salir del mes
           </button>
@@ -461,31 +460,30 @@ function Dashboard() {
                   {meses.map((m) => (
                     <div
                       key={m.id}
-                      className="px-5 md:px-6 py-4 flex items-center justify-between hover:bg-gray-50/50 transition-colors"
+                      className="px-2 sm:px-4 md:px-6 py-4 flex items-center justify-between hover:bg-gray-50/50 transition-colors"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold shrink-0">
+                        <div className="invisible sm:visible w-0 h-0 sm:w-10 sm:h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold shrink-0">
                           {m.nombre.substring(0, 2).toUpperCase()}
                         </div>
                         <span className="font-semibold text-gray-700 truncate max-w-[150px] sm:max-w-none">
                           {m.nombre}
                         </span>
                       </div>
-                      
-                      
+
                       <div className="flex items-center gap-2">
                         <button
-                        onClick={()=> eliminarMes(m.id)}
-                        className="px-4 py-2 rounded-lg cursor-pointer bg-gray-50 text-gray-700 text-xs font-bold hover:bg-gray-200 transition-all shadow-sm"
-                      >
-                        Eliminar
-                      </button>
-                      <button
-                        onClick={() => setMesActivo(m)}
-                        className="px-4 py-2 rounded-lg cursor-pointer bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition-all shadow-sm"
-                      >
-                        Ver detalles
-                      </button>
+                          onClick={() => eliminarMes(m.id)}
+                          className="px-4 py-2 rounded-lg cursor-pointer bg-gray-50 text-gray-700 text-xs font-bold hover:bg-gray-200 transition-all shadow-sm"
+                        >
+                          Eliminar
+                        </button>
+                        <button
+                          onClick={() => setMesActivo(m)}
+                          className="px-4 py-2 rounded-lg cursor-pointer bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition-all shadow-sm"
+                        >
+                          Ver detalles
+                        </button>
                       </div>
                     </div>
                   ))}

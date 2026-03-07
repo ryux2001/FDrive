@@ -192,7 +192,7 @@ function Expenses() {
               setMenuMovilAbierto(false);
               navigate("/dashboard");
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
+            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors hover:text-black cursor-pointer ${
               !mesActivo
                 ? "bg-blue-50 text-blue-700"
                 : "text-gray-600 hover:bg-gray-50"
@@ -230,7 +230,7 @@ function Expenses() {
         <div className="p-4 border-t border-gray-100">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+            className="cursor-pointer w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors"
           >
             Cerrar sesión
           </button>
@@ -289,19 +289,19 @@ function Expenses() {
                   </h3>
                 </div>
                 {/*Inpust de busqueda */}
-                <div className="grid grid-cols-2 gap-2 wrap-normal">
+                <div className="flex gap-4 items-center flex-wrap">
                   <input type="text"
                   onChange={(e)=> setBusqueda(e.target.value)}
                   placeholder="Buscar Gasto"
-                  className="border-2 border-gray-300 rounded-3xl px-3 py-2"
+                  className="border-2 border-gray-300 rounded-3xl px-3 py-2 w-50"
                   value={busqueda} />
                   
                 <button
                   onClick={crearGasto}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full text-sm font-bold shadow-lg shadow-blue-100 transition-all flex justify-center w-35" 
+                  className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full text-sm font-bold shadow-lg shadow-blue-100 transition-all flex justify-center w-25" 
                 >
-                  {/* <Plus size={18} /> */}
-                  Agregar Gasto
+                  <Plus size={18} />
+                  Gasto
                 </button>
                 </div>
               </div>
@@ -368,14 +368,14 @@ function Expenses() {
                         <div className="flex items-center gap-2 ml-13 sm:ml-0">
                           <button
                             onClick={() => editarGasto(gasto)}
-                            className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                            className="cursor-pointer p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                             title="Editar"
                           >
                             <Edit size={18} />
                           </button>
                           <button
                             onClick={() => eliminarGasto(gasto.id)}
-                            className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            className="cursor-pointer p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                             title="Eliminar"
                           >
                             <Trash2 size={18} />

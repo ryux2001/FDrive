@@ -3,7 +3,7 @@ import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
 import { useMes } from "../context/MesContext";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X, LayoutDashboard, Users, Truck, Route, FileText, Receipt, HelpCircle, Plus } from "lucide-react";
+import { Menu, X, LayoutDashboard, Users, Truck, Route, FileText, Receipt, HelpCircle, Plus, Trash2, Edit } from "lucide-react";
 
 function Vans() {
   const { usuario } = useAuth();
@@ -185,7 +185,7 @@ function Vans() {
               setMenuMovilAbierto(false);
               navigate("/dashboard");
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
+            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors hover:text-black cursor-pointer ${
               !mesActivo
                 ? "bg-blue-50 text-blue-700"
                 : "text-gray-600 hover:bg-gray-50"
@@ -223,7 +223,7 @@ function Vans() {
         <div className="p-4 border-t border-gray-100">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+            className="cursor-pointer w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors"
           >
             Cerrar sesión
           </button>
@@ -260,10 +260,10 @@ function Vans() {
           {/* Botón agregar furgoneta */}
           <button
             onClick={crearFurgoneta}
-            className="mb-6 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full text-sm font-bold shadow-lg shadow-blue-100 transition-all flex items-center gap-2"
+            className="cursor-pointer mb-6 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full text-sm font-bold shadow-lg shadow-blue-100 transition-all flex items-center gap-2"
           >
             <Plus size={18} />
-            Agregar Furgoneta
+            Furgoneta
           </button>
 
           {cargando && (
@@ -331,17 +331,17 @@ function Vans() {
                         <div className="flex gap-2">
                           <button
                             onClick={() => editarFurgoneta(furgoneta)}
-                            className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                            className="cursor-pointer p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                             title="Editar"
                           >
-                            ✎
+                            <Edit size={18}/>
                           </button>
                           <button
                             onClick={() => eliminarFurgoneta(furgoneta.id)}
-                            className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            className="cursor-pointer p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                             title="Eliminar"
                           >
-                            🗑️
+                            <Trash2 size={18}/>
                           </button>
                         </div>
                       </div>
